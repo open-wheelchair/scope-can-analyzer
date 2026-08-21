@@ -1,0 +1,5 @@
+hantek6022api @ git+https://github.com/Ho-Ro/Hantek6022API@a1903dd9fb00589939557cbab8883b46f84ba0fc
+scapy
+numpy
+scikit-learn
+python-pcapng
