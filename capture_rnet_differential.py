@@ -24,6 +24,7 @@ import time
 import os
 import sys
 import argparse
+import datetime
 
 
 parser = argparse.ArgumentParser(
@@ -77,6 +78,8 @@ probe_attenuation = 10
 
 data_points_per_callback = 3 * 1024
 
+print("Setting up oscilloscope, please wait...")
+
 scope = Oscilloscope()
 scope.setup()
 if not scope.open_handle():
@@ -92,7 +95,7 @@ scope.get_calibration_values()
 time.sleep(1)
 
 
-num_samples = time_to_sample_s * sample_rate_index * 1000 * 1000
+num_samples = int(time_to_sample_s * sample_rate_index * 1000 * 1000)
 
 data = np.zeros((2, num_samples), dtype=np.uint8)
 
@@ -174,4 +177,4 @@ else:
 
 capture_info = f'CAN traffic capture; channel 1 = can high joystick side; channel 2 = can high power module side; 10 ohm resistor in between; {sample_rate} samples/s'
 
-np.savez_compressed(OUTFILE, scaled_ch_1=scaled_ch_1, scaled_ch_2=scaled_ch_2, metadata=METADATA, extra_comment=extra_comment, capture_info=capture_info, sample_rate=sample_rate)
+np.savez_compressed(OUTFILE, scaled_ch_1=scaled_ch_1, scaled_ch_2=scaled_ch_2, metadata=METADATA, extra_comment=extra_comment, capture_info=capture_info, sample_rate=sample_rate, date=datetime.datetime.now().isoformat())
